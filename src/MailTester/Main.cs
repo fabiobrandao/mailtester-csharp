@@ -34,8 +34,8 @@ namespace MailTester
                 txbStatus.Text += "\r\nSMTP Port: " + int.Parse(smtpPort);
                 txbStatus.Text += "\r\nSubject: " + strSubject;
                 txbStatus.Text += "\r\nMessage: " + strMensagem;
-                txbStatus.Text += "\r\nFrom: " + strTo;
-                txbStatus.Text += "\r\nTo: " + strFrom;
+                txbStatus.Text += "\r\nFrom: " + strFrom;
+                txbStatus.Text += "\r\nTo: " + strTo;
 
                 MailMessage mail = new MailMessage();
                 mail.Subject = strSubject;
@@ -45,8 +45,7 @@ namespace MailTester
                 mail.BodyEncoding = System.Text.Encoding.GetEncoding("UTF-8");
                 mail.SubjectEncoding = System.Text.Encoding.GetEncoding("UTF-8");
 
-                string from = strFrom;
-                mail.From = new System.Net.Mail.MailAddress(from);
+                mail.From = new System.Net.Mail.MailAddress(strFrom);
 
                 SmtpClient smtp = new SmtpClient();
                 smtp.Host = smtpHost;
