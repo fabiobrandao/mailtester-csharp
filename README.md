@@ -1,4 +1,5 @@
 # Mail Tester CSharp
-Simple application for email sending test
+Simples aplicação para teste de envio de emails
 
-Este projeto apresenta de forma simples como enviar um e-mail.
+# Objetivo
+Este projeto apresenta de forma simples como enviar um e-mail utilizando C#
