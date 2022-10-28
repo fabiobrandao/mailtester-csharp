@@ -4,9 +4,9 @@ using System.Windows.Forms;
 
 namespace MailTester
 {
-    public partial class frmMain : Form
+    public partial class Main : Form
     {
-        public frmMain()
+        public Main()
         {
             InitializeComponent();
         }

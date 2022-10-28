@@ -1,6 +1,6 @@
 ﻿namespace MailTester
 {
-    partial class frmMain
+    partial class Main
     {
         /// <summary>
         /// Required designer variable.
@@ -81,7 +81,7 @@
             // lblPass
             // 
             this.lblPass.AutoSize = true;
-            this.lblPass.Location = new System.Drawing.Point(211, 74);
+            this.lblPass.Location = new System.Drawing.Point(212, 74);
             this.lblPass.Name = "lblPass";
             this.lblPass.Size = new System.Drawing.Size(33, 13);
             this.lblPass.TabIndex = 3;
