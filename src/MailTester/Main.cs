@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Net.Mail;
 using System.Windows.Forms;
 
@@ -9,9 +10,9 @@ namespace MailTester
         public Main()
         {
             InitializeComponent();
-        }
 
-        #region ::ACTIONS::
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+        }
 
         private void btnSend_Click(object sender, EventArgs e)
         {
@@ -38,6 +39,7 @@ namespace MailTester
                 txbStatus.Text += "\r\nTo: " + strTo;
 
                 MailMessage mail = new MailMessage();
+                mail.Priority = 0;
                 mail.Subject = strSubject;
                 mail.Body = strMensagem;
                 mail.IsBodyHtml = true;
@@ -45,23 +47,30 @@ namespace MailTester
                 mail.BodyEncoding = System.Text.Encoding.GetEncoding("UTF-8");
                 mail.SubjectEncoding = System.Text.Encoding.GetEncoding("UTF-8");
 
-                mail.From = new System.Net.Mail.MailAddress(strFrom);
+                mail.From = new MailAddress(strFrom);
 
-                SmtpClient smtp = new SmtpClient();
-                smtp.Host = smtpHost;
-                smtp.Port = int.Parse(smtpPort);
-
-                if (chkAutentication.Checked)
+                using (SmtpClient smtp = new SmtpClient())
                 {
-                    smtp.UseDefaultCredentials = true;
-                    smtp.Credentials = new System.Net.NetworkCredential(smtpUser, smtPwd);
+                    smtp.Host = smtpHost;
+                    smtp.Port = int.Parse(smtpPort);
+                    smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+
+                    if (chkAutentication.Checked)
+                    {                    
+                        smtp.UseDefaultCredentials = false;
+                        smtp.Credentials = new NetworkCredential(smtpUser, smtPwd);
+                        
+                        // Descomentar as linha abaixo para uso com Office 365
+                        // smtp.EnableSsl = true;
+                        // smtp.TargetName = "STARTTLS/smtp.office365.com";
+                    }
+
+                    mail.To.Add(strTo);
+
+                    smtp.Send(mail);
+
+                    txbStatus.Text += "\r\nSuccess!";
                 }
-
-                mail.To.Add(strTo);
-
-                smtp.Send(mail);
-
-                txbStatus.Text += "\r\nSuccess!";
             }
             catch (Exception ex)
             {
@@ -73,7 +82,5 @@ namespace MailTester
         {
             txbStatus.Text = string.Empty;
         }
-
-        #endregion
     }
 }
